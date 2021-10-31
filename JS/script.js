@@ -8,6 +8,27 @@
     остаток от деления - rem(ainder)
 */
 
+function start() {
+    while (true) {
+
+        let num1;
+        let num2;
+        let operation;
+
+        num1 = prompt('введите первое число', '');
+        if (num1 === null) break;
+        num2 = prompt('введите второе число', '');
+        if (num2 === null) break;
+        operation = prompt('введите операцию', '');
+        if (operation === null) break;
+
+        let result = calc(operation, +num1, +num2);
+
+        alert(result);
+    }    
+}
+
+
 function calc(operation, num1, num2) {
 
     if (checkParams(operation, num1, num2)) {
@@ -37,7 +58,7 @@ function calc(operation, num1, num2) {
 function checkParams(operation, num1, num2) {
     if ((operation && num1 && num2 === undefined) || (typeof(num1) != 'number' || typeof(num2) != 'number')) {
         return true;
-    }
+    }    
 }
 
 function sum(num1, num2) {
@@ -69,3 +90,5 @@ function rem(num1, num2) {
 function expo(num1, num2) {
     return num1 ** num2;
 }
+
+start();
