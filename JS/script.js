@@ -1,94 +1,47 @@
-/* 
-Операции:
-    сложить - sum
-    вычесть - diff(erence)
-    умножить - mult(iplication)
-    разделить - div(ision)
-    возвести в степент - expo(nent)
-    остаток от деления - rem(ainder)
-*/
-
-function start() {
-    while (true) {
-
-        let num1;
-        let num2;
-        let operation;
-
-        num1 = prompt('введите первое число', '');
-        if (num1 === null) break;
-        num2 = prompt('введите второе число', '');
-        if (num2 === null) break;
-        operation = prompt('введите операцию', '');
-        if (operation === null) break;
-
-        let result = calc(operation, +num1, +num2);
-
-        alert(result);
-    }    
-}
-
-
 function calc(operation, num1, num2) {
 
-    if (checkParams(operation, num1, num2)) {
+    // Вариант проверки без доп. функций
+    // const isArgsUndefined = operation === undefined && num1 === undefined && num2 === undefined;
+    // const isOperandNaN = typeof num1 !== 'number' || typeof num2 !== 'number';
+    // const isNotValid = isArgsUndefined || isOperandNaN;
+    // const isDivisorZero = num2 === 0 && operation === 'div' || num2 === 0 && operation === 'rem';
+
+    function isNotNumber(arg) {
+        return (typeof arg !== 'number');
+    }
+
+    function isUndefined(arg) {
+        return (arg === undefined);
+    }
+    const isNotValid = isUndefined(operation) && isUndefined(num1) && isUndefined(num2) || (isNotNumber(num1) || isNotNumber(num2));
+    const isDivisorZero = num2 === 0 && (operation === 'div' || operation === 'rem');
+
+    if (isNotValid) {
         return 'error';
-    } else {
-        switch (operation) {
-            case 'sum':
-                return sum(num1, num2);
-            case 'diff':
-                return diff(num1, num2);
-            case 'mult':
-                return mult(num1, num2);
-            case 'div':
-                return div(num1, num2);
-            case 'rem':
-                return rem(num1, num2);
-            case 'expo':
-                return expo(num1, num2);
-            default:
-                return 'unknown operations';
-        }
+    } else if (isDivisorZero) {
+        return 'на ноль делить нельзя';
     }
-
-
-}
-
-function checkParams(operation, num1, num2) {
-    if ((operation && num1 && num2 === undefined) || (typeof(num1) != 'number' || typeof(num2) != 'number')) {
-        return true;
-    }    
-}
-
-function sum(num1, num2) {
-    return num1 + num2;
-}
-
-function diff(num1, num2) {
-    return num1 - num2;
-}
-
-function mult(num1, num2) {
-    return num1 * num2;
-}
-
-function div(num1, num2) {
-    if (num2 == 0) {
-        return 'на ноль делить нельзя'
+    switch (operation) {
+        case 'sum':
+            return num1 + num2;
+        case 'diff':
+            return num1 - num2;
+        case 'mult':
+            return num1 * num2;
+        case 'div':
+            return num1 / num2;
+        case 'rem':
+            return num1 % num2;
+        case 'expo':
+            return num1 ** num2;
+        default:
+            return 'unknown operations';
     }
-    return num1 / num2;
 }
 
-function rem(num1, num2) {
-    if (num2 == 0) {
-        return 'на ноль делить нельзя'
-    }
-    return num1 % num2;
-}
-
-function expo(num1, num2) {
-    return num1 ** num2;
-}
-
-start();
+console.log(calc('sum', 5, 2));
+console.log(calc('diff', 4, 2));
+console.log(calc('mult', 5, 2));
+console.log(calc('div', 5, 0));
+console.log(calc('rem', 5, 0));
+console.log(calc('expso', 5, 13));
